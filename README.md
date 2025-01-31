@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+# E-Commerce Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+The E-Commerce Website is a fully functional online shopping platform designed to provide users with an intuitive and engaging shopping experience. The site features dynamic user interface elements, a wide range of products categorized for easy navigation, and robust functionalities for managing user interactions with products, including wishlist and cart features. Users can register, log in, browse products, add items to their cart and wishlist, and complete purchases seamlessly.
 
-In the project directory, you can run:
+## Setup Instructions
 
-### `npm start`
+To set up the project locally, follow these instructions:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js (version 14 or higher)
+- MongoDB (local installation or MongoDB Atlas account)
 
-### `npm test`
+### Clone the Repository
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+git clone https://github.com/yourusername/ecommerce-website.git
+cd ecommerce-website
+text
 
-### `npm run build`
+### Install Dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Navigate to both the frontend and backend directories to install the required dependencies.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Backend Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Navigate to the backend directory:
+   cd backend
+   text
 
-### `npm run eject`
+2. Install backend dependencies:
+   npm install
+   text
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Create a .env file in the backend directory and add your environment variables:
+   MONGO_URI=your_mongodb_connection_string_here
+   JWT_SECRET=your_jwt_secret_here
+   PORT=5000
+   text
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Start the backend server:
+   npm start
+   text
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Frontend Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Open a new terminal window and navigate to the frontend directory:
+   cd frontend
+   text
 
-## Learn More
+2. Install frontend dependencies:
+   npm install
+   text
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Start the frontend development server:
+   npm start
+   text
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Access the Application
 
-### Code Splitting
+Once both servers are running, you can access the application by navigating to http://localhost:3000 in your web browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Key Features
 
-### Analyzing the Bundle Size
+- _User Authentication_: Users can sign up, log in, and manage their accounts securely.
+- _Dynamic Navbar_: The navbar adapts its color based on the background for optimal visibility.
+- _Product Browsing_: Users can view products categorized by type (e.g., Kurta, Saree).
+- _Wishlist Functionality_: Users can save products to their wishlist for future reference.
+- _Cart Management_: Users can add products to their cart, adjust quantities, and proceed through a multi-step checkout process.
+- _Stock Management_: Users can only add available products to their cart based on selected size and color.
+- _Responsive Design_: The website is designed to be mobile-friendly for seamless use across devices.
+- _Order History_: Users can view their past orders in their profile.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Tech Stack
 
-### Making a Progressive Web App
+The following technologies were used in the development of the E-Commerce Website:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- _Frontend_:
+- React
+- React Router
+- Styled Components
+- Axios
 
-### Advanced Configuration
+- _Backend_:
+- Node.js
+- Express.js
+- MongoDB (with Mongoose)
+- Bcrypt (for password hashing)
+- Jsonwebtoken (for authentication)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contributing
 
-### Deployment
+Contributions are welcome! If you would like to contribute to this project, please fork the repository and submit a pull request with your changes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## License
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
