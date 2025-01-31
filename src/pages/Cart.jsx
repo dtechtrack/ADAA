@@ -19,6 +19,8 @@ const Cart = ({ product }) => {
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const { addOrder } = useOrders(); // Get addOrder function from context
   const [cart , setCart] = useState([])
+  const [total , setTotal] = useState(0)
+  const [totalDiscount , setTotalDiscount] = useState(0)
   // New state for payment method and card details
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [cardDetails, setCardDetails] = useState({
@@ -147,8 +149,20 @@ const Cart = ({ product }) => {
             return productDetails ? { ...productDetails, quantity: cartItem.quantity } : null;
           })
           .filter((item) => item !== null);
-
+          console.log(cartProducts)
         setCart(cartProducts);
+        const totalPrice = cartProducts.reduce((total, item) => total + item.originalPrice, 0);
+console.log(totalPrice);
+setTotal(totalPrice)
+
+const totalDiscount = cartProducts.reduce((total, item) => {
+  const discountAmount = item.originalPrice * (item.discountPercentage / 100);
+  return total + discountAmount;
+}, 0);
+
+console.log(totalDiscount);
+setTotalDiscount(totalDiscount)
+
       } catch (error) {
         console.error("Error fetching cart details:", error);
       }
@@ -183,8 +197,8 @@ const Cart = ({ product }) => {
                     <img src={product.image} alt={product.name} className="product-image" />
                     <div className="product-details">
                       <p className="product-name">{product.name}</p>
-                      <p className="product-price">₹{product.price}</p>
-                      <p className="product-size">Selected Size: {product.size}</p>
+                      <p className="product-price">₹{product.originalPrice}</p>
+                      <p className="product-size">Selected Size: {product.sizes[0].size}</p>
                       <p className="product-quantity">Quantity: {product.quantity}</p>
                     </div>
                     <div className="product-actions">
@@ -197,10 +211,10 @@ const Cart = ({ product }) => {
             )}
             <div className="order-details">
               <h3 className="order-heading">Order Details</h3>
-              <div className="order-item"><p>Cart Total:</p><p>₹{getTotalPrice()}</p></div>
-              <div className="order-item"><p>Total Discount:</p><p>-₹{getTotalDiscount().toFixed(2)}</p></div>
+              <div className="order-item"><p>Cart Total:</p><p>₹{total}</p></div>
+              <div className="order-item"><p>Total Discount:</p><p>-₹{totalDiscount}</p></div>
               <div className="order-item"><p>Delivery Fee:</p><p>Free</p></div>
-              <div className="order-total"><p>Order Total:</p><p>₹{getTotalPrice()}</p></div>
+              <div className="order-total"><p>Order Total:</p><p>₹{total - totalDiscount}</p></div>
             </div>
           </>
         );

@@ -136,6 +136,13 @@ const userObject = JSON.parse(userString);
 const id = userObject.id;
     const response = await axios.post('https://dhairya-server-m2he.onrender.com/api/addToCart',{id,productId,quantity})
     console.log(response)
+      if(response.added){
+        alert('product added to Cart')
+      }
+      else{
+        alert('product remove from Cart')
+
+      }
 
     alert(`${quantity} ${product.name}(s) in size ${selectedSize} added to cart.`);
     addToCart(product, quantity, selectedSize);

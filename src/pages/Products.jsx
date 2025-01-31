@@ -5,10 +5,12 @@ import { FaHeart } from "react-icons/fa";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import ProductModal from "../components/ProductModal";
 import { products } from "../data/productsData";
+import axios from "axios";
 
 const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [sortOption, setSortOption] = useState("");
+  
   const [filters, setFilters] = useState({
     category: [],
     priceRange: [],
@@ -66,12 +68,33 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     return Array.from(sizeSet).sort(); // Return sorted unique sizes
   };
   
-  const handleWishlistToggle = (product) => {
+  const handleWishlistToggle = async(product) => {
+
+
+
+
     if (wishlist.some((item) => item.id === product.id)) {
       removeFromWishlist(product.id);
     } else {
-      addToWishlist(product);
+      const productId = product.id
+    const userString = localStorage.getItem("user");
+
+const userObject = JSON.parse(userString);
+
+const id = userObject.id;
+      const response= await axios.post('https://dhairya-server-m2he.onrender.com/api/addToWishList', {id,productId})
+      console.log(response)
+      if(response.data.added){
+        alert('product added to wishlist')
+      }
+      else{
+        alert('product remove from wishlist')
+
+      }
+      // addToWishlist(product);
+
     }
+
   };
 
   const handleSortChange = (e) => {

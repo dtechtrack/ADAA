@@ -58,13 +58,8 @@ const email = userObject.email;
 const id = userObject.id;
     const response = await axios.post('https://dhairya-server-m2he.onrender.com/api/addToCart',{id,productId,quantity})
     console.log(response)
-      if(response.added){
-        alert('product added to wishlist')
-      }
-      else{
-        alert('product remove from wishlist')
-
-      }
+        alert('product added to Cart')
+      
     // addToCart(product, quantity, selectedSize);
     onClose(); // Close the modal after adding to cart
   };
