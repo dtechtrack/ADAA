@@ -138,7 +138,7 @@ const Cart = ({ product }) => {
         const userObject = JSON.parse(userString);
         const id = userObject.id;
 
-        const response = await axios.post("http://localhost:5000/api/getCartDetails", { id });
+        const response = await axios.post("https://dhairya-server-m2he.onrender.com/api/getCartDetails", { id });
 
         // Filter and map cart products with product details
         const cartProducts = response.data.products

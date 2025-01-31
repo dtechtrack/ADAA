@@ -57,7 +57,7 @@ const Wishlist = ({ wishlist, removeFromWishlist }) => {
       const userObject = JSON.parse(userString);
       
       const id = userObject.id;
-      const response = await axios.post('http://localhost:5000/api/getWishList',{id} )
+      const response = await axios.post('https://dhairya-server-m2he.onrender.com/api/getWishList',{id} )
       const wishListProducts = response.data.products
                 .map((wishListItem) => {
                   const productDetails = products.find((product) => product.id === wishListItem.productId);
@@ -77,7 +77,7 @@ const Wishlist = ({ wishlist, removeFromWishlist }) => {
 const userObject = JSON.parse(userString);
 
 const id = userObject.id;
-      const response= await axios.post('http://localhost:5000/api/addToWishList', {id,productId})
+      const response= await axios.post('https://dhairya-server-m2he.onrender.com/api/addToWishList', {id,productId})
       console.log(response)
       
       if(response.added){
@@ -90,7 +90,7 @@ const id = userObject.id;
       const userObject = JSON.parse(userString);
       
       const id = userObject.id;
-      const response = await axios.post('http://localhost:5000/api/getWishList',{id} )
+      const response = await axios.post('https://dhairya-server-m2he.onrender.com/api/getWishList',{id} )
       const wishListProducts = response.data.products
                 .map((wishListItem) => {
                   const productDetails = products.find((product) => product.id === wishListItem.productId);

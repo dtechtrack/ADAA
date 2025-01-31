@@ -56,7 +56,7 @@ const userObject = JSON.parse(userString);
 // Access the email
 const email = userObject.email;
 const id = userObject.id;
-    const response = await axios.post('http://localhost:5000/api/addToCart',{id,productId,quantity})
+    const response = await axios.post('https://dhairya-server-m2he.onrender.com/api/addToCart',{id,productId,quantity})
     console.log(response)
       if(response.added){
         alert('product added to wishlist')
