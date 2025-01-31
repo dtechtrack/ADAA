@@ -84,13 +84,8 @@ const userObject = JSON.parse(userString);
 const id = userObject.id;
       const response= await axios.post('https://dhairya-server-m2he.onrender.com/api/addToWishList', {id,productId})
       console.log(response)
-      if(response.data.added){
         alert('product added to wishlist')
-      }
-      else{
-        alert('product remove from wishlist')
 
-      }
       // addToWishlist(product);
 
     }
