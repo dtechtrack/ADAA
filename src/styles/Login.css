@@ -1,5 +1,3 @@
-
-
 /* Container layout for the login page */
 .login-container {
   display: flex;
@@ -7,7 +5,7 @@
   justify-content: center;
   width: 70%;
   max-width: 1200px;
-  height: 50%;
+  height: 40%;
   margin-bottom: 60px;
   margin-top: 80px;
   margin-left:auto;
@@ -27,11 +25,12 @@
   align-items: center;
   overflow: hidden;
   gap: 20px;
+  margin-top:-50px;
 }
 
 .image-section img {
   width: 100%;
-  height: 60%;
+  height: 70%;
   object-fit: cover;
 }
 
@@ -124,5 +123,5 @@ p a {
 }
 
 p a:hover {
-  text-decoration: underline;
+  text-decoration: underline;
 }

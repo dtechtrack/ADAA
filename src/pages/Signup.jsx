@@ -28,8 +28,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
-      <div className="image-section">
+    <div className="scontainer">
+      <div className="image">
         <img src={img} alt="Contact Us Banner" className="banner-image" />
       </div>
 
