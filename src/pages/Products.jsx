@@ -1,17 +1,21 @@
-import React, { useState,useEffect} from "react";
-import { Link ,useLocation} from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link , useLocation } from "react-router-dom";
 import "../styles/Products.css";
-import { FaHeart } from "react-icons/fa";
-import { FaPlus, FaMinus } from "react-icons/fa";
+import { FaHeart, FaMinus , FaPlus } from "react-icons/fa";
 import ProductModal from "../components/ProductModal";
-import { products } from "../data/productsData";
+import { ProductContext } from '../context/ProductContext';
 import axios from "axios";
+
+
+  
 
 const Products = ({ addToWishlist, removeFromWishlist }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [sortOption, setSortOption] = useState("");
-    const [wishlist, setWishlist] = useState([]);
-  
+  const { products, loading} = useContext(ProductContext); // Access products from context
+  const [wishlist, setWishlist] = useState([]);
+
+
   const [filters, setFilters] = useState({
     category: [],
     priceRange: [],
@@ -21,26 +25,15 @@ const Products = ({ addToWishlist, removeFromWishlist }) => {
     color: [],
 
   });
-  const [expandedSections, setExpandedSections] = useState({
-    category: true,
-    priceRange: true,
-    discount: true,
-    rating: true, // Added for ratingo'xz
-    size: true, 
-    color: true,
-    
-  });
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const categoryFromURL = params.get("category");
+
   useEffect(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem("wishlist"));
-    if (storedWishlist) {
-      setWishlist(storedWishlist);
-    }
-  }, []);
-  
-  
+    // Scroll to the top when the component is mounted or navigated to
+    window.scrollTo(0, 0);
+  }, [location.pathname]); // Runs only when the pathname changes
+
   useEffect(() => {
     if (categoryFromURL) {window.scrollTo(0, 0);
       setFilters((prev) => ({
@@ -50,6 +43,25 @@ const Products = ({ addToWishlist, removeFromWishlist }) => {
       }));
     }
   }, [categoryFromURL]);
+
+  const [expandedSections, setExpandedSections] = useState({
+    category: true,
+    priceRange: true,
+    discount: true,
+    rating: true, // Added for ratingo'xz
+    size: true, 
+    color: true,
+    
+  });
+
+  useEffect(() => {
+    const storedWishlist = JSON.parse(localStorage.getItem("wishlist"));
+    if (storedWishlist) {
+      setWishlist(storedWishlist);
+    }
+  }, []);
+  
+
   const getUniqueColors = () => {
     const colorMap = new Map();
   
@@ -317,27 +329,13 @@ const Products = ({ addToWishlist, removeFromWishlist }) => {
 
 
 
-    return (
-      <div style={{ display: "flex", gap: "20px" }}>
-        {/* Left Sidebar for Filters */}
-        <div
-          style={{
-            width: "50%",
-            padding: "70px",
-            paddingTop:"20px",
-            marginTop: "70px",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            backgroundColor: "rgb(255, 252, 245)",
-            position: "sticky",
-            top: "10px",
-            height: "fit-content",
-          }}
-        >
-          <h3 style={{ marginBottom: "16px" }}>Filters</h3>
-    
+   return (
 
 
+      <div className="filter-container">
+    {/* Left Sidebar for Filters */}
+    <div className="filter-sidebar">
+      <h3 style={{ marginBottom: "30px", marginLeft: "-20px", fontSize: "23px", marginTop:"30px"}}>Filters</h3>
           {/* Category Filter */}
         <div style={{ marginBottom: "16px" }}>
           <div
@@ -628,7 +626,7 @@ const Products = ({ addToWishlist, removeFromWishlist }) => {
                       name="size"
                       value={size}
                       onChange={handleFilterChange}
-                      style={{ marginRight: "-30px", marginLeft: "-20%" }}
+                      style={{ marginRight: "20px", marginLeft: "-10%" }}
                     />
                     <label
                       htmlFor={`size-${size}`}
@@ -640,7 +638,7 @@ const Products = ({ addToWishlist, removeFromWishlist }) => {
                       }}
                     >
                       <span style={{ marginRight: "8px" }}>{size}</span>
-                      <span style={{ color: "#888", marginLeft: "-20px"  }}>({productCount})</span>
+                      <span style={{ color: "#888", marginLeft: "-10px"  }}>({productCount})</span>
                     </label>
                   </div>
                 );
@@ -730,15 +728,14 @@ const Products = ({ addToWishlist, removeFromWishlist }) => {
             </div>
           )}
         </div>
-
-
-
       </div>
-
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <div className="products-container" >
+    
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div className="products-container">
         <h2>PRODUCTS</h2>
-        <div className="sort-options" style={{ marginBottom: '30px',marginRight: "-65%" }} >
+        
+        {/* Sort Options */}
+        <div className="sort-options" style={{ marginBottom: '30px', marginRight: "-65%" }}>
           <label htmlFor="sort" style={{ fontSize: "20px" }}>Sort by:</label>
           <select id="sort" value={sortOption} onChange={handleSortChange} style={{ padding: '7px', marginLeft:"10px", borderRadius: '4px', border: '1px solid #ccc' }}>
             <option value="">Select</option>
@@ -749,15 +746,20 @@ const Products = ({ addToWishlist, removeFromWishlist }) => {
             <option value="rating">Ratings</option>
           </select>
         </div>
-        <div className="product-list">{renderProducts()}</div>
+
+        {/* Render Products */}
+        <div className="product-list">{loading ? <p>Loading products...</p> : renderProducts()}</div>
+
+        {/* Product Modal */}
         {selectedProduct && (
           <ProductModal
             product={selectedProduct}
             onClose={() => setSelectedProduct(null)}
           />
         )}
+        
       </div>
-      </div>
+    </div>
     </div>
   );
 };

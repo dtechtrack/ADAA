@@ -1,5 +1,5 @@
-import p1 from "../assets/K-N-1.webp";
-import p2 from "../assets/K-G-1.webp";
+// import p1 from "../assets/K-N-1.webp";
+// import p2 from "../assets/K-G-1.webp";
 import p5 from "../assets/K-F-3.webp";
 import p6 from "../assets/K-H-1.webp";
 import p7 from "../assets/K-L-1.webp";
@@ -42,22 +42,22 @@ import p36 from "../assets/L-B-1.webp";
     name: "Red Trinkets Tunic Set",
     originalPrice: 330,
     discountPercentage: 30,
-    rating: { rate: 4.5, count: 120 },
     category: "kurta",
-    image: p1,
-    images: [
-      require("../assets/K-N-1.webp"),
-       require("../assets/K-N-2.webp"),
-       require("../assets/K-N-3.webp"),
-    ],
     description: "Yoke adorned with gold sequin and dori embroidery.",
+    rating: { rate: 4.5, count: 120 },
+    image: "https://i.ibb.co/RkbG2Mtk/K-N-1.webp",
+    colors: [
+      { "code": "#cf0b0b", "name": "Red" },
+    ],
+    images: [
+      "https://i.ibb.co/RkbG2Mtk/K-N-1.webp",
+            "https://i.ibb.co/Mxf167gg/K-N-2.webp",
+            "https://i.ibb.co/svy6d8kG/K-N-3.webp",
+    ],
     details: [
       "Made from premium quality fabric",
       "Perfect for festive occasions",
       "Available in multiple sizes",
-    ],
-    colors: [
-      { "code": "#cf0b0b", "name": "Red" },
     ],
     sizes: [
       { size: "One Size", stock: 10 },
@@ -70,22 +70,22 @@ import p36 from "../assets/L-B-1.webp";
     name: "The Keseri Salwar Set",
     originalPrice: 435,
     discountPercentage: 35,
-    rating: { rate: 4.0, count: 95 },
     category: "kurta",
     description: "A floral printed kurta with a modern touch.",
-    image: p2,
+    rating: { rate: 4.0, count: 95 },
+    image: "https://i.ibb.co/YBx3NjJ2/K-G-1.webp",
+    colors: [{ "code": "#f39c12", "name": "Orange" },
+      { "code": "#bb3613", "name": "Red" }, 
+    ],
     images: [
-        require("../assets/K-G-1.webp"),
-        require("../assets/K-G-2.webp"),
-        require("../assets/K-G-3.webp"),
+        "https://i.ibb.co/YBx3NjJ2/K-G-1.webp",
+            "https://i.ibb.co/R50wcp9/K-G-2.webp",
+            "https://i.ibb.co/pBmNFLYy/K-G-3.webp",
       ],
       details: [
         "Lightweight and breathable fabric",
         "Elegant floral prints",
         "Ideal for casual outings",
-      ],
-      colors: [{ "code": "#f39c12", "name": "Orange" },
-        { "code": "#bb3613", "name": "Red" }, 
       ],
     sizes: [
       { size: "6", stock: 2 },

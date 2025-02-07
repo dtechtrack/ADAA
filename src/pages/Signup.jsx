@@ -14,7 +14,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://dhairya-server-m2he.onrender.com/api/auth/register', {
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
         username: name,
         email,
         password,
