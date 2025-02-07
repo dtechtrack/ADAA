@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState,useEffect} from "react";
+import { Link ,useLocation} from "react-router-dom";
 import "../styles/Products.css";
 import { FaHeart } from "react-icons/fa";
 import { FaPlus, FaMinus } from "react-icons/fa";
@@ -7,9 +7,10 @@ import ProductModal from "../components/ProductModal";
 import { products } from "../data/productsData";
 import axios from "axios";
 
-const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
+const Products = ({ addToWishlist, removeFromWishlist }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [sortOption, setSortOption] = useState("");
+    const [wishlist, setWishlist] = useState([]);
   
   const [filters, setFilters] = useState({
     category: [],
@@ -29,6 +30,26 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     color: true,
     
   });
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const categoryFromURL = params.get("category");
+  useEffect(() => {
+    const storedWishlist = JSON.parse(localStorage.getItem("wishlist"));
+    if (storedWishlist) {
+      setWishlist(storedWishlist);
+    }
+  }, []);
+  
+  
+  useEffect(() => {
+    if (categoryFromURL) {window.scrollTo(0, 0);
+      setFilters((prev) => ({
+        ...prev,
+        category: [categoryFromURL],
+        
+      }));
+    }
+  }, [categoryFromURL]);
   const getUniqueColors = () => {
     const colorMap = new Map();
   
@@ -68,29 +89,44 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     return Array.from(sizeSet).sort(); // Return sorted unique sizes
   };
   
-  const handleWishlistToggle = async(product) => {
-
-
-
-
-    if (wishlist.some((item) => item.id === product.id)) {
-      removeFromWishlist(product.id);
-    } else {
-      const productId = product.id
+  const handleWishlistToggle = async (product) => {
+    const productId = product.id;
     const userString = localStorage.getItem("user");
-
-const userObject = JSON.parse(userString);
-
-const id = userObject.id;
-      const response= await axios.post('https://dhairya-server-m2he.onrender.com/api/addToWishList', {id,productId})
-      console.log(response)
-        alert('product added to wishlist')
-
-      // addToWishlist(product);
-
+    const userObject = JSON.parse(userString);
+    const id = userObject?.id; // Ensure user data exists
+  
+    setWishlist((prevWishlist) => {
+      const isInWishlist = prevWishlist.some((item) => item.id === product.id);
+      let updatedWishlist;
+  
+      if (isInWishlist) {
+        // Remove from wishlist
+        alert("Product removed from wishlist");
+        updatedWishlist = prevWishlist.filter((item) => item.id !== product.id);
+      } else {
+        // Add to wishlist
+        alert("Product added to wishlist");
+        updatedWishlist = [...prevWishlist, product];
+      }
+  
+      // Save updated wishlist in localStorage
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      return updatedWishlist;
+    });
+  
+    try {
+      await axios.post(
+        "https://dhairya-server-m2he.onrender.com/api/addToWishList",
+        { id, productId }
+      );
+      console.log("Wishlist updated successfully!");
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
     }
-
   };
+  
+  
+  
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);

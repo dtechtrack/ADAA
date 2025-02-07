@@ -19,6 +19,8 @@ import { CartProvider } from "./context/CartContext";
 import { OrdersProvider } from "./context/OrdersContext";
 import Preloader from "./components/ElephantPreloader";
 import ShippingPolicy from "./pages/ShippingPolicy";
+import axios from "axios";
+
 
 function App() {
   const navigate = useNavigate();
@@ -56,31 +58,45 @@ function App() {
   useEffect(() => {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [wishlist]);
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      const userString = localStorage.getItem("user");
+      if (!userString) return;
 
-  // Add product to wishlist
-  const addToWishlist = (product) => {
-    // if (!isAuthenticated) {
-    //   navigate("/login"); // Redirect to login if not authenticated
-    //   return;
-    // }
-    // if (!wishlist.some((item) => item.id === product.id)) {
-    //   setWishlist((prevWishlist) => [...prevWishlist, product]);
-    //   showNotification(`${product.name} added to wishlist!`);
-    // } else {
-    //   showNotification(`${product.name} is already in the wishlist!`);
-    // }
-  };
+      const userObject = JSON.parse(userString);
+      const id = userObject.id;
 
-  // Remove product from wishlist
-  const removeFromWishlist = (id) => {
-    const removedItem = wishlist.find((item) => item.id === id);
-    setWishlist((prevWishlist) =>
-      prevWishlist.filter((item) => item.id !== id)
-    );
-    if (removedItem) {
-      showNotification(`${removedItem.name} removed from wishlist!`);
-    }
-  };
+      try {
+        const response = await axios.get(`https://dhairya-server-m2he.onrender.com/api/getWishlist/${id}`);
+        setWishlist(response.data); // Assuming backend returns an array of wishlist products
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
+      }
+    };
+
+    fetchWishlist();
+  }, []);
+
+
+   // Add product to wishlist
+const addToWishlist = (product) => {
+  if (!isAuthenticated) {
+    navigate("/login"); // Redirect to login if not authenticated
+    return;
+  }
+
+  if (!wishlist.some((item) => item.id === product.id)) {
+    setWishlist((prevWishlist) => [...prevWishlist, product]);
+    showNotification(`${product.name} added to wishlist!`);
+  } else {
+    showNotification(`${product.name} is already in the wishlist!`);
+  }
+};
+
+// Remove product from wishlist (without API)
+const removeFromWishlist = (id) => {
+  setWishlist((prevWishlist) => prevWishlist.filter((item) => item.id !== id));
+};
 
   // Show notification
   const showNotification = (message) => {
